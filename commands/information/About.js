@@ -7,7 +7,7 @@ module.exports = {
   usage: "help",
   run: async (client, message, args) => {
     const about = new MessageEmbed()
-      .setDescription(`> **; about**\n*it's an antinuke bot which prevents\nyour server from getting nuked.\nit's still in progress.*\n\n> **; Credits**\nCoded by : **Sxlitude#8885**\nGitHub: [Antinuke SRC](https://github.com/Sxlitude/discord-antinuke)`)
+      .setDescription(`> **; about**\n*it's an antinuke bot which prevents\nyour server from getting nuked.\nit's still in progress.*\n\n> **; Credits**\nCoded by : **Sxlitude#8885**\nGitHub: [Antinuke SRC](https://github.com/Sxlitude/antinuke)`)
       .setColor("FF00FF")
     message.channel.send(about)
   }}
