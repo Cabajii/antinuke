@@ -1,0 +1,32 @@
+{
+  "name": "command-handler",
+  "version": "1.0.1",
+  "description": "A basic and easy command handler",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.3.2",
+    "ascii-table": "0.0.9",
+    "chalk": "^4.0.0",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.6.0",
+    "express": "^4.17.1",
+    "fs": "^0.0.2",
+    "json5": "^2.2.0",
+    "opusscript": "^0.0.7"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "repository": {
+    "url": "https://github.com/LejhandGamingYT/discord.js-command-handler"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "discordjs",
+    "commandhandler"
+  ]
+}
