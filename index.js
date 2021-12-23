@@ -1,6 +1,7 @@
 const { Client, Collection } = require("discord.js");
 const Discord = require("discord.js");
 const client = new Client()
+const db = require('quick.db');
 
 client.commands = new Collection();
 client.aliases = new Collection();
@@ -55,7 +56,7 @@ client.on("message", async message => {
   if (command) command.run(client, message, args);
 });
 
-// Antinuke
+// AntiBan
 client.on('guildBanAdd', async (guild, user) => {
   const logs = await guild.fetchAuditLogs({
     limit: 1,
@@ -99,6 +100,8 @@ client.on('guildBanAdd', async (guild, user) => {
 
   if (executor.id === client.user.id) return;
   if (executor.id === guild.owner.id) return;
+  let trustedusers = db.get(`trustedusers_${guild.id}`)
+  if (trustedusers && trustedusers.find(find => find.user == executor.id)) return;
 
   const eventsTimestamp = Date.now().toString()
   const lts = createdTimestamp.toString();
@@ -138,6 +141,8 @@ client.on("guildMemberRemove", async member => {
 
   if (executor.id === member.guild.owner.id) return;
   if (executor.id === client.user.id) return;
+  let trustedusers = db.get(`trustedusers_${member.guild.id}`)
+  if (trustedusers && trustedusers.find(find => find.user == executor.id)) return;
 
   const eventsTimestamp = Date.now().toString()
   const lts = createdTimestamp.toString();
@@ -153,7 +158,7 @@ client.on("guildMemberRemove", async member => {
   }
 })
 
-
+// Anti Bot
 client.on("guildMemberAdd", async (member) => {
   const logs = await member.guild.fetchAuditLogs({
     limit: 1,
@@ -180,6 +185,8 @@ client.on("guildMemberAdd", async (member) => {
 
   if (executor.id === member.guild.owner.id) return;
   if (executor.id === client.user.id) return;
+  let trustedusers = db.get(`trustedusers_${member.guild.id}`)
+  if (trustedusers && trustedusers.find(find => find.user == executor.id)) return;
 
   const eventsTimestamp = Date.now().toString()
   const lts = createdTimestamp.toString();
@@ -242,8 +249,10 @@ client.on("channelDelete", async (channel) => {
 > [+] Banned **${executor.username}**`)
     .setColor(0x00FFFF)
 
-  if (executor.id === channel.guild.owner.id) return console.log("allowed action by owner.")
+  if (executor.id === channel.guild.owner.id) return;
   if (executor.id === client.user.id) return;
+  let trustedusers = db.get(`trustedusers_${channel.guild.id}`)
+  if (trustedusers && trustedusers.find(find => find.user == executor.id)) return;
 
   const eventsTimestamp = Date.now().toString()
   const lts = createdTimestamp.toString();
@@ -316,10 +325,10 @@ client.on("channelCreate", async (channel) => {
 > :dart: **__ACTIONS:__**
 > [+] Banned **${executor.username}**`)
     .setColor(0x00FFFF)
-
-  if (executor.id === channel.guild.owner.id) return console.log("allowed action by owner...")
+  let trustedusers = db.get(`trustedusers_${channel.guild.id}`)
+  if (executor.id === channel.guild.owner.id) return;
   if (executor.id === client.user.id) return;
-
+  if (trustedusers && trustedusers.find(find => find.user == executor.id)) return;
   const eventsTimestamp = Date.now().toString()
   const lts = createdTimestamp.toString();
   const ets = eventsTimestamp;
@@ -371,8 +380,10 @@ client.on("roleCreate", async (role) => {
   const lt = lts.slice(0, -3)
   const et = ets.slice(0, -3);
 
-  if (executor.id === role.guild.owner.id) return console.log("allowed action by owner..")
+  if (executor.id === role.guild.owner.id) return;
   if (executor.id === client.user.id) return;
+  let trustedusers = db.get(`trustedusers_${role.guild.id}`)
+  if (trustedusers && trustedusers.find(find => find.user == executor.id)) return;
 
   if (lt === et) {
     await role.guild.member(executor.id).ban({ reason: "Unallowed Role Creation" })
@@ -404,6 +415,8 @@ client.on("roleDelete", async (role) => {
     .setColor(0x00FFFF)
   if (executor.id === role.guild.owner.id) return;
   if (executor.id === client.user.id) return;
+  let trustedusers = db.get(`trustedusers_${role.guild.id}`)
+  if (trustedusers && trustedusers.find(find => find.user == executor.id)) return;
 
   const eventsTimestamp = Date.now().toString()
   const lts = createdTimestamp.toString();
@@ -430,6 +443,8 @@ client.on("webhookUpdate", async channel => {
 
   if (executor.id === channel.guild.owner.id) return;
   if (executor.id === client.user.id) return;
+  let trustedusers = db.get(`trustedusers_${channel.guild.id}`)
+  if (trustedusers && trustedusers.find(find => find.user == executor.id)) return;
 
   const eventsTimestamp = Date.now().toString()
   const lts = createdTimestamp.toString();
@@ -469,8 +484,8 @@ app.get('/', (req, res) => {
 app.listen(port, () => { })
 
 process.on("unhandledRejection", (reason, promise) => {
-  console.log("Unhandled Rejection at: " + promise)
-  console.log("Reason: " + reason)
+  // console.log("Unhandled Rejection at: " + promise)
+  // console.log("Reason: " + reason)
 })
 process.on("uncaughtException", (err, origin) => {
   console.log("Caught exception: " + err)
