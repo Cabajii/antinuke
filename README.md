@@ -3,6 +3,11 @@
 ## Requirements
 - a [replit](https://replit.com) account
 - an [uptimer](https://uptimerobot.com) service
+## What's New?
+- Added Trust Command
+- Added Untrust Command
+> ✨ *only the owner can trust people. trusted users won't get 
+> banned from the bot for doing actions in your servers!*
 ## Features
 - anti mass channel-create
 - anti mass channel-delete
