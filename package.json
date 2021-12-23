@@ -1,7 +1,7 @@
 {
-  "name": "command-handler",
+  "name": "discord-antinuke",
   "version": "1.0.1",
-  "description": "A basic and easy command handler",
+  "description": "A nice discord antinuke",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -23,7 +23,7 @@
     "node": "12.x"
   },
   "repository": {
-    "url": "https://github.com/LejhandGamingYT/discord.js-command-handler"
+    "url": "https://github.com/Sxlitude/antinuke"
   },
   "license": "MIT",
   "keywords": [
